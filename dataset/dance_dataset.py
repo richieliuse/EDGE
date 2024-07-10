@@ -8,9 +8,12 @@ from typing import Any
 
 import numpy as np
 import torch
-from pytorch3d.transforms import (RotateAxisAngle, axis_angle_to_quaternion,
-                                  quaternion_multiply,
-                                  quaternion_to_axis_angle)
+from pytorch3d.transforms import (
+    RotateAxisAngle,
+    axis_angle_to_quaternion,
+    quaternion_multiply,
+    quaternion_to_axis_angle,
+)
 from torch.utils.data import Dataset
 
 from dataset.preprocess import Normalizer, vectorize_many
@@ -31,7 +34,7 @@ class AISTPPDataset(Dataset):
         force_reload: bool = False,
     ):
         self.data_path = data_path
-        self.raw_fps = 60
+        self.raw_fps = 30
         self.data_fps = 30
         assert self.data_fps <= self.raw_fps
         self.data_stride = self.raw_fps // self.data_fps
@@ -103,7 +106,7 @@ class AISTPPDataset(Dataset):
 
         motion_path = os.path.join(split_data_path, "motions_sliced")
         sound_path = os.path.join(split_data_path, f"{self.feature_type}_feats")
-        wav_path = os.path.join(split_data_path, f"wavs_sliced")
+        wav_path = os.path.join(split_data_path, "wavs_sliced")
         # sort motions and sounds
         motions = sorted(glob.glob(os.path.join(motion_path, "*.pkl")))
         features = sorted(glob.glob(os.path.join(sound_path, "*.npy")))
@@ -262,9 +265,11 @@ class OrderedMusicDataset(Dataset):
         split_data_path = os.path.join(self.data_path)
         music_path = os.path.join(
             split_data_path,
-            f"{self.data_name}_baseline_feats"
-            if self.feature_type == "baseline"
-            else f"{self.data_name}_juke_feats/juke_66",
+            (
+                f"{self.data_name}_baseline_feats"
+                if self.feature_type == "baseline"
+                else f"{self.data_name}_juke_feats/juke_66"
+            ),
         )
         self.music_path = music_path
         # get the music filenames strided, with each subsequent item 5 slices (2.5 seconds) apart
