@@ -3,7 +3,6 @@ import os
 import pickle
 
 import librosa as lr
-import numpy as np
 import soundfile as sf
 from tqdm import tqdm
 
@@ -33,8 +32,8 @@ def slice_motion(motion_file, stride, length, num_slices, out_dir):
     # normalize root position
     pos /= scale
     start_idx = 0
-    window = int(length * 60)
-    stride_step = int(stride * 60)
+    window = int(length * 30)
+    stride_step = int(stride * 30)
     slice_count = 0
     # slice until done or until matching audio slices
     while start_idx <= len(pos) - window and slice_count < num_slices:
@@ -49,7 +48,7 @@ def slice_motion(motion_file, stride, length, num_slices, out_dir):
     return slice_count
 
 
-def slice_aistpp(motion_dir, wav_dir, stride=0.5, length=5):
+def slice_aistpp(motion_dir, wav_dir, stride=0.5, length=3):
     wavs = sorted(glob.glob(f"{wav_dir}/*.wav"))
     motions = sorted(glob.glob(f"{motion_dir}/*.pkl"))
     wav_out = wav_dir + "_sliced"

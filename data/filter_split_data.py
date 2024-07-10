@@ -1,4 +1,3 @@
-import glob
 import os
 import pickle
 import shutil
@@ -12,9 +11,9 @@ def fileToList(f):
     return out
 
 
-filter_list = set(fileToList("splits/ignore_list.txt"))
-train_list = set(fileToList("splits/crossmodal_train.txt"))
-test_list = set(fileToList("splits/crossmodal_test.txt"))
+filter_list = set(fileToList("splits/fb_ignore.txt"))
+train_list = set(fileToList("splits/fb_train.txt"))
+test_list = set(fileToList("splits/fb_test.txt"))
 
 
 def split_data(dataset_path):

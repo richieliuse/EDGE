@@ -82,10 +82,12 @@ def extract(fpath, skip_completed=True, dest_dir="aist_baseline_feats"):
     )
 
     # chop to ensure exact shape
-    audio_feature = audio_feature[:5 * FPS]
-    assert (audio_feature.shape[0] - 5 * FPS) == 0, f"expected output to be ~5s, but was {audio_feature.shape[0] / FPS}"
+    audio_feature = audio_feature[: 3 * FPS]
+    assert (
+        audio_feature.shape[0] - 3 * FPS
+    ) == 0, f"expected output to be ~5s, but was {audio_feature.shape[0] / FPS}"
 
-    #np.save(save_path, audio_feature)
+    # np.save(save_path, audio_feature)
     return audio_feature, save_path
 
 

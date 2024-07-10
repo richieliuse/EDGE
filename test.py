@@ -1,20 +1,19 @@
 import glob
 import os
+import random
 from functools import cmp_to_key
 from pathlib import Path
 from tempfile import TemporaryDirectory
-import random
 
-import jukemirlib
 import numpy as np
 import torch
 from tqdm import tqdm
 
 from args import parse_test_opt
-from data.slice import slice_audio
-from EDGE import EDGE
 from data.audio_extraction.baseline_features import extract as baseline_extract
 from data.audio_extraction.jukebox_features import extract as juke_extract
+from data.slice import slice_audio
+from EDGE import EDGE
 
 # sort filenames that look like songname_slice{number}.ext
 key_func = lambda x: int(os.path.splitext(x)[0].split("_")[-1].split("slice")[-1])
@@ -75,7 +74,7 @@ def test(opt):
                 dirname = temp_dir.name
             # slice the audio file
             print(f"Slicing {wav_file}")
-            slice_audio(wav_file, 2.5, 5.0, dirname)
+            slice_audio(wav_file, 2.5, 3.0, dirname)
             file_list = sorted(glob.glob(f"{dirname}/*.wav"), key=stringintkey)
             # randomly sample a chunk of length at most sample_size
             rand_idx = random.randint(0, len(file_list) - sample_size)
@@ -84,7 +83,9 @@ def test(opt):
             print(f"Computing features for {wav_file}")
             for idx, file in enumerate(tqdm(file_list)):
                 # if not caching then only calculate for the interested range
-                if (not opt.cache_features) and (not (rand_idx <= idx < rand_idx + sample_size)):
+                if (not opt.cache_features) and (
+                    not (rand_idx <= idx < rand_idx + sample_size)
+                ):
                     continue
                 # audio = jukemirlib.load_audio(file)
                 # reps = jukemirlib.extract(
@@ -115,7 +116,12 @@ def test(opt):
     for i in range(len(all_cond)):
         data_tuple = None, all_cond[i], all_filenames[i]
         model.render_sample(
-            data_tuple, "test", opt.render_dir, render_count=-1, fk_out=fk_out, render=not opt.no_render
+            data_tuple,
+            "test",
+            opt.render_dir,
+            render_count=-1,
+            fk_out=fk_out,
+            render=not opt.no_render,
         )
     print("Done")
     torch.cuda.empty_cache()

@@ -1,9 +1,6 @@
 import argparse
-import os
-from pathlib import Path
 
-from audio_extraction.baseline_features import \
-    extract_folder as baseline_extract
+from audio_extraction.baseline_features import extract_folder as baseline_extract
 from audio_extraction.jukebox_features import extract_folder as jukebox_extract
 from filter_split_data import *
 from slice import *
@@ -15,9 +12,9 @@ def create_dataset(opt):
     split_data(opt.dataset_folder)
     # slice motions/music into sliding windows to create training dataset
     print("Slicing train data")
-    slice_aistpp(f"train/motions", f"train/wavs")
+    slice_aistpp("train/motions", "train/wavs")
     print("Slicing test data")
-    slice_aistpp(f"test/motions", f"test/wavs")
+    slice_aistpp("test/motions", "test/wavs")
     # process dataset to extract audio features
     if opt.extract_baseline:
         print("Extracting baseline features")
