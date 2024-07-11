@@ -12,9 +12,9 @@ def create_dataset(opt):
     split_data(opt.dataset_folder)
     # slice motions/music into sliding windows to create training dataset
     print("Slicing train data")
-    slice_aistpp("train/motions", "train/wavs")
+    slice_aistpp("train/motions", "train/wavs", opt.stride, opt.length)
     print("Slicing test data")
-    slice_aistpp("test/motions", "test/wavs")
+    slice_aistpp("test/motions", "test/wavs", opt.stride, opt.length)
     # process dataset to extract audio features
     if opt.extract_baseline:
         print("Extracting baseline features")

@@ -12,6 +12,7 @@ from accelerate.state import AcceleratorState
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
+import Params
 from dataset.dance_dataset import AISTPPDataset
 from dataset.preprocess import increment_path
 from model.adan import Adan
@@ -50,7 +51,7 @@ class EDGE:
 
         feature_dim = 35 if use_baseline_feats else 4800
 
-        horizon_seconds = 5
+        horizon_seconds = Params.SLICE_LENGTH
         FPS = 30
         self.horizon = horizon = horizon_seconds * FPS
 
@@ -119,10 +120,10 @@ class EDGE:
     def train_loop(self, opt):
         # load datasets
         train_tensor_dataset_path = os.path.join(
-            opt.processed_data_dir, f"train_tensor_dataset.pkl"
+            opt.processed_data_dir, "train_tensor_dataset.pkl"
         )
         test_tensor_dataset_path = os.path.join(
-            opt.processed_data_dir, f"test_tensor_dataset.pkl"
+            opt.processed_data_dir, "test_tensor_dataset.pkl"
         )
         if (
             not opt.no_cache
@@ -284,5 +285,5 @@ class EDGE:
             sound=True,
             mode="long",
             fk_out=fk_out,
-            render=render
+            render=render,
         )

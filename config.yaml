@@ -1,0 +1,16 @@
+training:
+  slice: 5
+  stride: 0.5
+  raw_fps: 30
+  fps: 30
+
+predict:
+  slice: 5
+  stride: 0.5
+  fps: 30
+
+data:
+  working_path: ""
+  train_list: ""
+  test_list: ""
+  ignore_list: ""
