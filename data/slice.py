@@ -6,8 +6,6 @@ import librosa as lr
 import soundfile as sf
 from tqdm import tqdm
 
-import Params
-
 
 def slice_audio(audio_file, stride, length, out_dir):
     # stride, length in seconds
@@ -34,8 +32,8 @@ def slice_motion(motion_file, stride, length, num_slices, out_dir):
     # normalize root position
     pos /= scale
     start_idx = 0
-    window = int(length * Params.MOTION_FPS)
-    stride_step = int(stride * Params.MOTION_FPS)
+    window = int(length * 30)
+    stride_step = int(stride * 30)
     slice_count = 0
     # slice until done or until matching audio slices
     while start_idx <= len(pos) - window and slice_count < num_slices:

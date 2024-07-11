@@ -7,7 +7,7 @@ import librosa as lr
 import numpy as np
 from tqdm import tqdm
 
-import Params
+# import Params
 
 FPS = 30
 HOP_LENGTH = 512
@@ -84,9 +84,9 @@ def extract(fpath, skip_completed=True, dest_dir="aist_baseline_feats"):
     )
 
     # chop to ensure exact shape
-    audio_feature = audio_feature[: Params.SLICE_LENGTH * FPS]
+    audio_feature = audio_feature[: 3 * FPS]
     assert (
-        audio_feature.shape[0] - Params.SLICE_LENGTH * FPS
+        audio_feature.shape[0] - 3 * FPS
     ) == 0, f"expected output to be ~5s, but was {audio_feature.shape[0] / FPS}"
 
     # np.save(save_path, audio_feature)

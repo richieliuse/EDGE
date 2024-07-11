@@ -6,13 +6,12 @@ from pathlib import Path
 
 import torch
 import torch.nn.functional as F
-import wandb
 from accelerate import Accelerator, DistributedDataParallelKwargs
 from accelerate.state import AcceleratorState
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
-import Params
+import wandb
 from dataset.dance_dataset import AISTPPDataset
 from dataset.preprocess import increment_path
 from model.adan import Adan
@@ -51,7 +50,7 @@ class EDGE:
 
         feature_dim = 35 if use_baseline_feats else 4800
 
-        horizon_seconds = Params.SLICE_LENGTH
+        horizon_seconds = 3
         FPS = 30
         self.horizon = horizon = horizon_seconds * FPS
 

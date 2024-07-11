@@ -9,7 +9,6 @@ import numpy as np
 import torch
 from tqdm import tqdm
 
-import Params
 from args import parse_test_opt
 from data.audio_extraction.baseline_features import extract as baseline_extract
 from data.audio_extraction.jukebox_features import extract as juke_extract
