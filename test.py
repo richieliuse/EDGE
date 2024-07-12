@@ -74,9 +74,7 @@ def test(opt):
                 dirname = temp_dir.name
             # slice the audio file
             print(f"Slicing {wav_file}")
-            slice_audio(
-                wav_file, Params.PREDICT_STRIDE, Params.PREDICT_SLICE_LENGTH, dirname
-            )
+            slice_audio(wav_file, 1.5, 3.0, dirname)
             file_list = sorted(glob.glob(f"{dirname}/*.wav"), key=stringintkey)
             # randomly sample a chunk of length at most sample_size
             rand_idx = random.randint(0, len(file_list) - sample_size)
